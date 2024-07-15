@@ -3,6 +3,10 @@ This Cheat Engine Script allows you to change character visual colors.
 You can create custom settings, mess around with them or use presets.
 Added two custom scripts that show how to make real time color changes.
 
+#### Custom Colors By Others:
+- Roy_Strife [Twitch](https://www.twitch.tv/roy_strife)
+- Kujo [Twitch](https://www.twitch.tv/banished_kujo)
+
 #### Requirements:
 - Requires WorldChrMan symbol
 - Requires Param Patcher
