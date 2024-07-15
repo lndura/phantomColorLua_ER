@@ -5,14 +5,14 @@
       <ID>1337305549</ID>
       <Description>"Phantom Colors Mod"</Description>
       <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{$lua}
 if syntaxcheck then return end
 [ENABLE]
 --[[
     Indura.
-    Ported from ds3, cleaned up code and fixed entries for ER.
-    15-7-2023 (eu)
+    12-7-2023
 --]]
 
 phantomColor = allocateMemory(0x38)
@@ -31,6 +31,7 @@ deAlloc(phantomColor)
 60:Invader
 *:Game not Attached
 </DropDownList>
+          <LastState Value="-1" RealAddress="7FF36806EE08"/>
           <ShowAsSigned>1</ShowAsSigned>
           <VariableType>4 Bytes</VariableType>
           <Address>WorldChrMan</Address>
@@ -43,6 +44,7 @@ deAlloc(phantomColor)
         <CheatEntry>
           <ID>1987660648</ID>
           <Description>"Clientside Untrue Dark Ring"</Description>
+          <LastState/>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{$lua}
 if syntaxcheck then return end
@@ -55,6 +57,7 @@ writeInteger("[[[WorldChrMan]+10EF8]+0]+538",-1)
         <CheatEntry>
           <ID>1337305551</ID>
           <Description>"Rainbow Color"</Description>
+          <LastState/>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{$lua}
 if syntaxcheck then return end
@@ -136,6 +139,7 @@ paramUtils:restore("PhantomParamRainbowEdit")
         <CheatEntry>
           <ID>1337305552</ID>
           <Description>"Trans Flag"</Description>
+          <LastState/>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{$lua}
 if syntaxcheck then return end
@@ -224,6 +228,7 @@ paramUtils:restore("PhantomParamTransEdit")
         <CheatEntry>
           <ID>1337305554</ID>
           <Description>"Use Custom Phantom Color"</Description>
+          <LastState/>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{$lua}
 if syntaxcheck then return end
@@ -247,17 +252,20 @@ writeBytes(param,phantomParameters)
           <ID>1987671261</ID>
           <Description>"Customize"</Description>
           <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
           <GroupHeader>1</GroupHeader>
           <CheatEntries>
             <CheatEntry>
               <ID>1337305567</ID>
               <Description>"Presets"</Description>
               <Options moHideChildren="1"/>
+              <LastState Value="" Activated="1" RealAddress="00000000"/>
               <GroupHeader>1</GroupHeader>
               <CheatEntries>
                 <CheatEntry>
                   <ID>1987671193</ID>
                   <Description>"&lt;-- Save Current Settings As Preset"</Description>
+                  <LastState/>
                   <VariableType>Auto Assembler Script</VariableType>
                   <AssemblerScript>{$lua}
 if syntaxcheck then return end
@@ -288,40 +296,30 @@ disableMemrec(memrec)
 [DISABLE]
 </AssemblerScript>
                 </CheatEntry>
-                <CheatEntry>
-                  <ID>1987671260</ID>
-                  <Description>"Indura's Custom Preset"</Description>
-                  <VariableType>Auto Assembler Script</VariableType>
-                  <AssemblerScript>{$lua}
-if syntaxcheck then return end
-[ENABLE]
-local bytes = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x80,0x3F,0x04,0x01,0x00,0x00,0xCD,0xCC,0x8C,0x3F,0x00,0x00,0x00,0x00, }
-writeBytes("phantomColor",bytes)
-disableMemrec(memrec)
-[DISABLE]
-</AssemblerScript>
-                </CheatEntry>
               </CheatEntries>
             </CheatEntry>
             <CheatEntry>
               <ID>1987671255</ID>
               <Description>"] Custom Color Settings"</Description>
               <Options moHideChildren="1"/>
+              <LastState Value="" Activated="1" RealAddress="00000000"/>
               <GroupHeader>1</GroupHeader>
               <CheatEntries>
                 <CheatEntry>
                   <ID>1987671259</ID>
                   <Description>"Set Custom Color AOB By ID"</Description>
+                  <LastState/>
                   <VariableType>Auto Assembler Script</VariableType>
                   <AssemblerScript>{$lua}
 if syntaxcheck then return end
 [ENABLE]
 --]]  phantomColor ID you want to use (see param helpers on how to obtain these).
 
-local ID = 290
+local ID = 60
 
 --]]  Dont touch
 local param = paramUtils:getIdAddressInParam("PhantomParam",ID)
+printf("Param ID: %d\nParam Address: %X",ID,param)
 local newData = readBytes(param,0x38,true)
 writeBytes("phantomColor",newData)
 disableMemrec(memrec)
@@ -331,6 +329,7 @@ disableMemrec(memrec)
                 <CheatEntry>
                   <ID>1987671256</ID>
                   <Description>"AOB"</Description>
+                  <LastState Value="CD CC 4C 3D CD CC 4C 3D 00 00 80 3F 00 00 80 3F 00 00 00 00 FF 28 28 28 3C 3C FF D2 BE FF FF FF FF FF FF 00 00 00 80 3F 00 00 80 3F 00 00 01 00 33 33 33 3F 00 00 00 3F" RealAddress="22C7F490000"/>
                   <ShowAsHex>1</ShowAsHex>
                   <ShowAsSigned>0</ShowAsSigned>
                   <VariableType>Array of byte</VariableType>
@@ -340,12 +339,14 @@ disableMemrec(memrec)
                 <CheatEntry>
                   <ID>1987671258</ID>
                   <Description>"The Alpha/Float Values are 0.00-1.00 instead 0-100% (can go beyond though)."</Description>
+                  <LastState Value="" RealAddress="00000000"/>
                   <Color>FF8000</Color>
                   <GroupHeader>1</GroupHeader>
                 </CheatEntry>
                 <CheatEntry>
                   <ID>1987671247</ID>
                   <Description>"] Alpha"</Description>
+                  <LastState Value="" RealAddress="22C7F490000"/>
                   <ShowAsSigned>0</ShowAsSigned>
                   <GroupHeader>1</GroupHeader>
                   <Address>phantomColor</Address>
@@ -353,6 +354,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671238</ID>
                       <Description>"Global Alpha"</Description>
+                      <LastState Value="1" RealAddress="22C7F490024"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Float</VariableType>
                       <Address>+24</Address>
@@ -360,6 +362,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671198</ID>
                       <Description>"EdgeColor"</Description>
+                      <LastState Value="0.05000000075" RealAddress="22C7F490000"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Float</VariableType>
                       <Address>+0</Address>
@@ -367,6 +370,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671199</ID>
                       <Description>"FrontColor"</Description>
+                      <LastState Value="0.05000000075" RealAddress="22C7F490004"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Float</VariableType>
                       <Address>+4</Address>
@@ -374,6 +378,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671200</ID>
                       <Description>"DiffColor"</Description>
+                      <LastState Value="1" RealAddress="22C7F490008"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Float</VariableType>
                       <Address>+8</Address>
@@ -381,6 +386,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671201</ID>
                       <Description>"SpecColor"</Description>
+                      <LastState Value="1" RealAddress="22C7F49000C"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Float</VariableType>
                       <Address>+C</Address>
@@ -388,6 +394,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671202</ID>
                       <Description>"LightColor"</Description>
+                      <LastState Value="0" RealAddress="22C7F490010"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Float</VariableType>
                       <Address>+10</Address>
@@ -397,6 +404,7 @@ disableMemrec(memrec)
                 <CheatEntry>
                   <ID>1987671249</ID>
                   <Description>"] EdgeColor"</Description>
+                  <LastState Value="" RealAddress="22C7F490000"/>
                   <ShowAsSigned>0</ShowAsSigned>
                   <GroupHeader>1</GroupHeader>
                   <Address>phantomColor</Address>
@@ -404,6 +412,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671205</ID>
                       <Description>"Red 0"</Description>
+                      <LastState Value="255" RealAddress="22C7F490014"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+14</Address>
@@ -411,6 +420,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671206</ID>
                       <Description>"Green 0"</Description>
+                      <LastState Value="40" RealAddress="22C7F490015"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+15</Address>
@@ -418,6 +428,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671207</ID>
                       <Description>"Blue 0"</Description>
+                      <LastState Value="40" RealAddress="22C7F490016"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+16</Address>
@@ -427,6 +438,7 @@ disableMemrec(memrec)
                 <CheatEntry>
                   <ID>1987671250</ID>
                   <Description>"] FrontColor"</Description>
+                  <LastState Value="" RealAddress="22C7F490000"/>
                   <ShowAsSigned>0</ShowAsSigned>
                   <GroupHeader>1</GroupHeader>
                   <Address>phantomColor</Address>
@@ -434,6 +446,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671210</ID>
                       <Description>"Red 1"</Description>
+                      <LastState Value="40" RealAddress="22C7F490017"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+17</Address>
@@ -441,6 +454,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671211</ID>
                       <Description>"Green 1"</Description>
+                      <LastState Value="60" RealAddress="22C7F490018"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+18</Address>
@@ -448,6 +462,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671212</ID>
                       <Description>"Blue 1"</Description>
+                      <LastState Value="60" RealAddress="22C7F490019"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+19</Address>
@@ -457,6 +472,7 @@ disableMemrec(memrec)
                 <CheatEntry>
                   <ID>1987671251</ID>
                   <Description>"] DiffColor"</Description>
+                  <LastState Value="" RealAddress="22C7F490000"/>
                   <ShowAsSigned>0</ShowAsSigned>
                   <GroupHeader>1</GroupHeader>
                   <Address>phantomColor</Address>
@@ -464,6 +480,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671215</ID>
                       <Description>"Red 2"</Description>
+                      <LastState Value="255" RealAddress="22C7F49001A"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+1A</Address>
@@ -471,6 +488,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671216</ID>
                       <Description>"Green 2"</Description>
+                      <LastState Value="210" RealAddress="22C7F49001B"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+1B</Address>
@@ -478,6 +496,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671217</ID>
                       <Description>"Blue 2"</Description>
+                      <LastState Value="190" RealAddress="22C7F49001C"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+1C</Address>
@@ -487,6 +506,7 @@ disableMemrec(memrec)
                 <CheatEntry>
                   <ID>1987671252</ID>
                   <Description>"] SpecColor"</Description>
+                  <LastState Value="" RealAddress="22C7F490000"/>
                   <ShowAsSigned>0</ShowAsSigned>
                   <GroupHeader>1</GroupHeader>
                   <Address>phantomColor</Address>
@@ -494,6 +514,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671220</ID>
                       <Description>"Red 3"</Description>
+                      <LastState Value="255" RealAddress="22C7F49001D"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+1D</Address>
@@ -501,6 +522,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671221</ID>
                       <Description>"Green 3"</Description>
+                      <LastState Value="255" RealAddress="22C7F49001E"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+1E</Address>
@@ -508,6 +530,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671222</ID>
                       <Description>"Blue 3"</Description>
+                      <LastState Value="255" RealAddress="22C7F49001F"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+1F</Address>
@@ -517,6 +540,7 @@ disableMemrec(memrec)
                 <CheatEntry>
                   <ID>1987671253</ID>
                   <Description>"] LightColor"</Description>
+                  <LastState Value="" RealAddress="22C7F490000"/>
                   <ShowAsSigned>0</ShowAsSigned>
                   <GroupHeader>1</GroupHeader>
                   <Address>phantomColor</Address>
@@ -524,6 +548,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671225</ID>
                       <Description>"Red 4"</Description>
+                      <LastState Value="255" RealAddress="22C7F490020"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+20</Address>
@@ -531,6 +556,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671226</ID>
                       <Description>"Green 4"</Description>
+                      <LastState Value="255" RealAddress="22C7F490021"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+21</Address>
@@ -538,6 +564,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671227</ID>
                       <Description>"Blue 4"</Description>
+                      <LastState Value="255" RealAddress="22C7F490022"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+22</Address>
@@ -547,6 +574,7 @@ disableMemrec(memrec)
                 <CheatEntry>
                   <ID>1987671254</ID>
                   <Description>"] Blending"</Description>
+                  <LastState Value="" RealAddress="22C7F490000"/>
                   <ShowAsSigned>0</ShowAsSigned>
                   <GroupHeader>1</GroupHeader>
                   <Address>phantomColor</Address>
@@ -554,6 +582,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671239</ID>
                       <Description>"Blend Rate"</Description>
+                      <LastState Value="1" RealAddress="22C7F490028"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Float</VariableType>
                       <Address>+28</Address>
@@ -561,6 +590,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671240</ID>
                       <Description>"Blend Type"</Description>
+                      <LastState Value="0" RealAddress="22C7F49002C"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+2C</Address>
@@ -568,6 +598,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671241</ID>
                       <Description>"isEdgeSubtract"</Description>
+                      <LastState Value="0" RealAddress="22C7F49002D"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+2D</Address>
@@ -575,6 +606,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671242</ID>
                       <Description>"isFrontSubtract"</Description>
+                      <LastState Value="1" RealAddress="22C7F49002E"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+2E</Address>
@@ -582,6 +614,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671243</ID>
                       <Description>"isNo2Pass "</Description>
+                      <LastState Value="0" RealAddress="22C7F49002F"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Byte</VariableType>
                       <Address>+2F</Address>
@@ -589,6 +622,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671244</ID>
                       <Description>"EdgePower"</Description>
+                      <LastState Value="0.6999999881" RealAddress="22C7F490030"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Float</VariableType>
                       <Address>+30</Address>
@@ -596,6 +630,7 @@ disableMemrec(memrec)
                     <CheatEntry>
                       <ID>1987671245</ID>
                       <Description>"glowScale"</Description>
+                      <LastState Value="0.5" RealAddress="22C7F490034"/>
                       <ShowAsSigned>0</ShowAsSigned>
                       <VariableType>Float</VariableType>
                       <Address>+34</Address>
