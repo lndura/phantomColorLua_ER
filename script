@@ -62,15 +62,18 @@ if syntaxcheck then return end
 local AL_List = getAddressList()
 --AL_List.getMemoryRecordByDescription("Rainbow Color").Active=false
 AL_List.getMemoryRecordByDescription("Trans Flag").Active=false
-AL_List.getMemoryRecordByDescription("Custom Phantom Color").Active=false
+AL_List.getMemoryRecordByDescription("Use Custom Phantom Color").Active=false
 
 local ColorEdit = PhantomParam:new("PhantomParamRainbowEdit", 1)
+      ColorEdit:Red(0)
       ColorEdit:Red2(0)
       ColorEdit:Red3(0)
       ColorEdit:Red4(0)
+      ColorEdit:Green(0)
       ColorEdit:Green2(0)
       ColorEdit:Green3(0)
       ColorEdit:Green4(0)
+      ColorEdit:Blue(0)
       ColorEdit:Blue2(0)
       ColorEdit:Blue3(0)
       ColorEdit:Blue4(0)
@@ -140,7 +143,7 @@ if syntaxcheck then return end
 local AL_List = getAddressList()
 AL_List.getMemoryRecordByDescription("Rainbow Color").Active=false
 --AL_List.getMemoryRecordByDescription("Trans Flag").Active=false
-AL_List.getMemoryRecordByDescription("Custom Phantom Color").Active=false
+AL_List.getMemoryRecordByDescription("Use Custom Phantom Color").Active=false
 
 -- Set up the initial color values
 local ColorEdit = PhantomParam:new("PhantomParamTransEdit", 1)
@@ -228,7 +231,7 @@ if syntaxcheck then return end
 local AL_List = getAddressList()
 AL_List.getMemoryRecordByDescription("Rainbow Color").Active=false
 AL_List.getMemoryRecordByDescription("Trans Flag").Active=false
---AL_List.getMemoryRecordByDescription("Custom Phantom Color").Active=false
+--AL_List.getMemoryRecordByDescription("Use Custom Phantom Color").Active=false
 
 local param = paramUtils:getIdAddressInParam("PhantomParam",1)
 phantomParameters = readBytes(param,0x38,true)
