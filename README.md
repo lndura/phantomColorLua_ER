@@ -16,7 +16,7 @@ Added two custom scripts that show how to make real time color changes.
 #### How to use:
 1. Open the raw code version of [Text File](https://raw.githubusercontent.com/lndura/phantomColorLua_ER/main/text%20file)
 2. Copy the text
-3. Open [The Grand Archvies Elden Ring Cheat Table](https://github.com/The-Grand-Archives/Elden-Ring-CT-TGA/releases/tag/v1.10.1)
+3. Open [The Grand Archives Elden Ring Cheat Table](https://github.com/The-Grand-Archives/Elden-Ring-CT-TGA/releases/tag/v1.10.1)
 4. Right click in the address list section
 5. Click paste
 6. Save Cheat Table file
