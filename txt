@@ -1,0 +1,954 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable>
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1337305549</ID>
+      <Description>"Phantom Colors Mod"</Description>
+      <Options moHideChildren="1"/>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+--[[
+    Indura.
+    12-7-2023
+--]]
+
+phantomColor = allocateMemory(0x38)
+registerSymbol("phantomColor",phantomColor)
+[DISABLE]
+unregisterSymbol("phantomColor")
+deAlloc(phantomColor)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1337305550</ID>
+          <Description>"PhantomColor"</Description>
+          <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">-1:Mod Off / Default
+0:Clientside Untrue Dark Ring
+1:Mod On / White Glow
+51:White Phantom
+60:Invader
+61:Gold Phantom
+70:Hunter
+211:Black Phantom
+230:White Ghost, White Eyes
+270:Piss Ghost
+810:Invisible Cloak
+811:Flashbang
+290:Void
+901:White Ghost, Normal
+902:Bloodstain Ghost
+*:Game not Attached
+</DropDownList>
+          <ShowAsSigned>1</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>WorldChrMan</Address>
+          <Offsets>
+            <Offset>538</Offset>
+            <Offset>0</Offset>
+            <Offset>10EF8</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1987660648</ID>
+          <Description>"Clientside Untrue Dark Ring"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+writeInteger("[[[WorldChrMan]+10EF8]+0]+538",0)
+[DISABLE]
+writeInteger("[[[WorldChrMan]+10EF8]+0]+538",-1)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1337305551</ID>
+          <Description>"Rainbow Color"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local AL_List = getAddressList()
+--AL_List.getMemoryRecordByDescription("Rainbow Color").Active=false
+AL_List.getMemoryRecordByDescription("Trans Flag").Active=false
+AL_List.getMemoryRecordByDescription("Use Custom Phantom Color").Active=false
+
+local ColorEdit = PhantomParam:new("PhantomParamRainbowEdit", 1)
+      ColorEdit:Red(0)
+      ColorEdit:Red2(0)
+      ColorEdit:Red3(0)
+      ColorEdit:Red4(0)
+      ColorEdit:Green(0)
+      ColorEdit:Green2(0)
+      ColorEdit:Green3(0)
+      ColorEdit:Green4(0)
+      ColorEdit:Blue(0)
+      ColorEdit:Blue2(0)
+      ColorEdit:Blue3(0)
+      ColorEdit:Blue4(0)
+      ColorEdit:Flag(0)
+      ColorEdit:Flag1(0)
+      ColorEdit:Fade(1.0)
+      ColorEdit:Fade1(1.0)
+      ColorEdit:Brightness(0.1)
+      ColorEdit:Brightness1(0.1)
+      ColorEdit:Brightness2(0.1)
+      ColorEdit:Brightness3(0.1)
+      ColorEdit:Brightness4(0.1)
+
+local array = {155,1,1}
+local function getColor(arg)
+   local max = 255
+   local min = 1
+   local step = max/255
+   if arg[1] &gt; min and arg[3] &lt;= min then
+      arg[1] = arg[1] - step
+      arg[2] = arg[2] + step
+   end
+   if arg[2] &gt; min and arg[1] &lt;= min then
+      arg[2] = arg[2] - step
+      arg[3] = arg[3] + step
+   end
+   if arg[3] &gt; min and arg[2] &lt;= min then
+      arg[3] = arg[3] - step
+      arg[1] = arg[1] + step
+   end
+   return arg
+end
+
+rainbowBodyTimer = createTimer(getMainForm())
+rainbowBodyTimer.Interval = 1
+rainbowBodyTimer.OnTimer = function()
+   if readQword("[WorldChrMan]") ~= nil then
+      getColor(array)
+      for i = 1,3,1 do
+         ColorEdit:Red1(array[1])
+         --ColorEdit:Red2(array[1])
+         ColorEdit:Green1(array[2])
+         --ColorEdit:Green2(array[2])
+         ColorEdit:Blue1(array[3])
+         --ColorEdit:Blue2(array[3])
+      end
+   end
+end
+if readInteger("[[[WorldChrMan]+10EF8]+0]+538") ~= nil then
+   writeInteger("[[[WorldChrMan]+10EF8]+0]+538",1)
+end
+[DISABLE]
+if readInteger("[[[WorldChrMan]+10EF8]+0]+538") ~= nil then
+   writeInteger("[[[WorldChrMan]+10EF8]+0]+538",-1)
+end
+rainbowBodyTimer.destroy()
+paramUtils:restore("PhantomParamRainbowEdit")
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1337305552</ID>
+          <Description>"Trans Flag"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local AL_List = getAddressList()
+AL_List.getMemoryRecordByDescription("Rainbow Color").Active=false
+--AL_List.getMemoryRecordByDescription("Trans Flag").Active=false
+AL_List.getMemoryRecordByDescription("Use Custom Phantom Color").Active=false
+
+-- Set up the initial color values
+local ColorEdit = PhantomParam:new("PhantomParamTransEdit", 1)
+      ColorEdit:Red(0)
+      ColorEdit:Red2(0)
+      ColorEdit:Red3(0)
+      ColorEdit:Red4(0)
+      ColorEdit:Green(0)
+      ColorEdit:Green2(0)
+      ColorEdit:Green3(0)
+      ColorEdit:Green4(0)
+      ColorEdit:Blue(0)
+      ColorEdit:Blue2(0)
+      ColorEdit:Blue3(0)
+      ColorEdit:Blue4(0)
+      ColorEdit:Fade(1.0)
+      ColorEdit:Fade1(1.0)
+      ColorEdit:Brightness(0.1)
+      ColorEdit:Brightness1(0.1)
+      ColorEdit:Brightness2(0.1)
+      ColorEdit:Brightness3(0.1)
+      ColorEdit:Brightness4(0.1)
+
+
+local colors = {
+    {89, 240, 225},
+    {245, 154, 242},
+    {255, 255, 255},
+    {245, 154, 242},
+    {89, 240, 225}
+}
+
+local currentColorIndex = 1
+local transitionTime = 1000 -- Set the transition time in milliseconds
+local startTime = os.clock()
+
+-- Timer setup
+colorCycleTimer = createTimer(getMainForm())
+colorCycleTimer.Interval = 100 -- Set the interval in milliseconds
+colorCycleTimer.OnTimer = function()
+    local elapsedTime = os.clock() - startTime
+
+    local currentColor = colors[currentColorIndex]
+    local targetColor = colors[currentColorIndex % #colors + 1]
+
+    -- Calculate the color transition based on elapsed time
+    local progress = math.min(1, elapsedTime / (transitionTime / 1000))
+    local newRed = math.floor(currentColor[1] + (targetColor[1] - currentColor[1]) * progress)
+    local newGreen = math.floor(currentColor[2] + (targetColor[2] - currentColor[2]) * progress)
+    local newBlue = math.floor(currentColor[3] + (targetColor[3] - currentColor[3]) * progress)
+
+      ColorEdit:Red1(newRed)
+      --ColorEdit:Red2(newRed)
+      ColorEdit:Green1(newGreen)
+      --ColorEdit:Green2(newGreen)
+      ColorEdit:Blue1(newBlue)
+      --ColorEdit:Blue2(newBlue)
+
+    -- Check if the transition is complete
+    if elapsedTime &gt;= transitionTime / 1000 then
+        currentColorIndex = currentColorIndex % #colors + 1
+        startTime = os.clock()
+    end
+end
+if readInteger("[[[WorldChrMan]+10EF8]+0]+538") ~= nil then
+   writeInteger("[[[WorldChrMan]+10EF8]+0]+538",1)
+end
+[DISABLE]
+if readInteger("[[[WorldChrMan]+10EF8]+0]+538") ~= nil then
+   writeInteger("[[[WorldChrMan]+10EF8]+0]+538",-1)
+end
+colorCycleTimer.destroy()
+paramUtils:restore("PhantomParamTransEdit")
+
+
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1337305554</ID>
+          <Description>"Use Custom Phantom Color"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local AL_List = getAddressList()
+AL_List.getMemoryRecordByDescription("Rainbow Color").Active=false
+AL_List.getMemoryRecordByDescription("Trans Flag").Active=false
+--AL_List.getMemoryRecordByDescription("Use Custom Phantom Color").Active=false
+
+local param = paramUtils:getIdAddressInParam("PhantomParam",1)
+phantomParameters = readBytes(param,0x38,true)
+writeBytes(param,readBytes("phantomColor",0x38,true))
+if readInteger("[[[WorldChrMan]+10EF8]+0]+538") ~= nil then writeInteger("[[[WorldChrMan]+10EF8]+0]+538",1) end
+[DISABLE]
+if readInteger("[[[WorldChrMan]+10EF8]+0]+538") ~= nil then writeInteger("[[[WorldChrMan]+10EF8]+0]+538",-1) end
+local param = paramUtils:getIdAddressInParam("PhantomParam",1)
+writeBytes(param,phantomParameters)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1987671340</ID>
+          <Description>"Update Realtime"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local AL_List = getAddressList()
+AL_List.getMemoryRecordByDescription("Rainbow Color").Active=false
+AL_List.getMemoryRecordByDescription("Trans Flag").Active=false
+--AL_List.getMemoryRecordByDescription("Use Custom Phantom Color").Active=false
+
+local param = paramUtils:getIdAddressInParam("PhantomParam",1)
+phantomParameters = readBytes(param,0x38,true)
+
+updatePhantomColorTimer = createTimer(getMainForm())
+updatePhantomColorTimer.Interval = 100
+updatePhantomColorTimer.OnTimer = function()
+   writeBytes(param,readBytes("phantomColor",0x38,true))
+   if readInteger("[[[WorldChrMan]+10EF8]+0]+538") ~= nil then
+      writeInteger("[[[WorldChrMan]+10EF8]+0]+538",1)
+   end
+end
+[DISABLE]
+updatePhantomColorTimer.destroy()
+
+if readInteger("[[[WorldChrMan]+10EF8]+0]+538") ~= nil then
+   writeInteger("[[[WorldChrMan]+10EF8]+0]+538",-1)
+end
+
+local param = paramUtils:getIdAddressInParam("PhantomParam",1)
+writeBytes(param,phantomParameters)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1987671261</ID>
+          <Description>"Customize"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>1337305567</ID>
+              <Description>"Presets"</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>1987671193</ID>
+                  <Description>"&lt;-- Save Current Settings As Preset"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local bytes = readBytes("phantomColor",0x38,true)
+local array = "{ "
+for _,byte in ipairs(bytes) do
+   array = string.format("%s0x%02X,",array,byte)
+end
+array = string.format("%s%s",array," }\n")
+local script = [[
+{$lua}
+if syntaxcheck then return end
+&lt;/[ENABLE]
+local bytes = ]] .. array ..[[
+writeBytes("phantomColor",bytes)
+disableMemrec(memrec)
+&lt;/[DISABLE]
+]]
+local sname = readString("[[GameDataMan]+8]+9C",48,true) .. "'s Custom Preset"
+local newScript = getAddressList().createMemoryRecord()
+newScript.setDescription(sname)
+newScript.Color = 0xFFFFFF
+newScript.Type = 11
+newScript.Script =  string.gsub(script, "&lt;/","")
+newScript.appendToEntry(memrec.Parent)
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671341</ID>
+                  <Description>"&lt;-- Randomize"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+if readByte("phantomColor") == nil then error("Enable Phantom Colors Mod before use.") end
+for i=0,0x38,1 do
+  local rng = math.random(0,255)
+  writeByte("phantomColor+" .. i,rng)
+end
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671264</ID>
+                  <Description>"Riot"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local bytes = { 0x0A,0xD7,0xA3,0x3D,0x0A,0xD7,0x23,0x3C,0x9A,0x99,0x19,0x3F,0xCD,0xCC,0x4C,0x3E,0xA6,0x9B,0x44,0x3C,0xBE,0x14,0x2D,0xE9,0xBC,0xF0,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x53,0xEC,0x53,0x00,0x00,0x00,0x80,0x3F,0x00,0x00,0x80,0x3F,0x00,0x00,0x01,0x00,0x5C,0x8F,0xC2,0x3E,0x00,0x00,0x80,0x3F, }
+writeBytes("phantomColor",bytes)
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671324</ID>
+                  <Description>"Joutaro's White Phantom"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local bytes = { 0x00,0x00,0x00,0x3F,0x00,0x00,0x00,0x00,0x00,0x00,0x80,0x3F,0x9A,0x99,0x99,0x3F,0xCD,0xCC,0x4C,0x3E,0x75,0x95,0xD1,0x00,0x00,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x5A,0x90,0xE0,0x00,0x48,0xE1,0x7A,0x3F,0x00,0x00,0x80,0x3F,0x00,0x00,0x01,0x00,0x00,0x00,0x00,0x3F,0x7B,0x14,0xAE,0x3E, }
+writeBytes("phantomColor",bytes)
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671325</ID>
+                  <Description>"RedRiot"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local bytes = { 0xEC,0x51,0x38,0x3E,0x42,0x60,0xE5,0x3B,0x9A,0x99,0x19,0x3E,0xCD,0xCC,0xCC,0x3D,0x9A,0x99,0x99,0x3D,0xBE,0x14,0x2D,0x86,0xD8,0xD8,0xDC,0xDC,0x00,0xFF,0xB4,0x00,0x53,0xEC,0x53,0x00,0x00,0x00,0x80,0x3F,0x00,0x00,0x80,0x3F,0x00,0x00,0x01,0x00,0x5C,0x8F,0xC2,0x3E,0x00,0x00,0x80,0x3F, }
+writeBytes("phantomColor",bytes)
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671326</ID>
+                  <Description>"FavOrange"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local bytes = { 0x66,0x66,0xE6,0x3E,0x0A,0xD7,0xA3,0x3B,0x0A,0xD7,0xA3,0x3E,0xCD,0xCC,0x4C,0x3E,0x9A,0x99,0x99,0x3E,0xFF,0x50,0x00,0x32,0x8F,0xFF,0xEC,0xA7,0x53,0x00,0x00,0x00,0xFF,0x50,0x00,0x00,0x00,0x00,0x80,0x3F,0x00,0x00,0x80,0x3F,0x00,0x00,0x01,0x00,0x5C,0x8F,0xC2,0x3E,0x00,0x00,0x00,0x00, }
+writeBytes("phantomColor",bytes)
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671327</ID>
+                  <Description>"Mogh Phantom"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local bytes = { 0x9A,0x99,0x19,0x3F,0x00,0x00,0x00,0x00,0xCD,0xCC,0x4C,0x3E,0xCD,0xCC,0x4C,0x3E,0x00,0x00,0x00,0x00,0xFF,0x00,0x00,0x00,0x00,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x00,0x00,0x00,0x00,0x00,0x00,0x80,0x3F,0x00,0x00,0x80,0x3F,0x00,0x00,0x01,0x00,0x5C,0x8F,0xC2,0x3E,0x00,0x00,0x00,0x00, }
+writeBytes("phantomColor",bytes)
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671328</ID>
+                  <Description>"Chick Frenzy Flame WIP"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local bytes = { 0x9A,0x99,0x19,0x3F,0xCD,0xCC,0xCC,0x3E,0x66,0x66,0xE6,0x3E,0x66,0x66,0xE6,0x3E,0x00,0x00,0x00,0x3F,0xF5,0xE1,0x5D,0x00,0x00,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xA3,0x2B,0x00,0x33,0x33,0x73,0x3F,0x00,0x00,0x80,0x3F,0x00,0x00,0x01,0x00,0x33,0x33,0x33,0x3F,0xCD,0xCC,0xCC,0x3D, }
+writeBytes("phantomColor",bytes)
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671329</ID>
+                  <Description>"Obsidian"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local bytes = { 0x9A,0x99,0x99,0x3E,0x8F,0xC2,0xF5,0x3C,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x3F,0x78,0x78,0x78,0x2D,0x2D,0x2D,0x0A,0x0A,0x0A,0x14,0x14,0x14,0x14,0x14,0x14,0x00,0x00,0x00,0x80,0x3F,0x00,0x00,0x80,0x3F,0x00,0x00,0x01,0x00,0x5C,0x8F,0xC2,0x3E,0x00,0x00,0x00,0x00, }
+writeBytes("phantomColor",bytes)
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671336</ID>
+                  <Description>"Mad Warrior, by Rayan"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local bytes = { 0x29,0x5C,0x8F,0x3D,0x0A,0xD7,0x23,0x3D,0x00,0x00,0x80,0x3F,0x00,0x00,0x80,0x3F,0x00,0x00,0x00,0x00,0xC8,0x78,0x50,0x00,0x41,0x5F,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x00,0x00,0x00,0x80,0x3F,0x00,0x00,0x80,0x3F,0x00,0x00,0x01,0x00,0x33,0x33,0x33,0x3F,0x00,0x00,0x00,0x3F, }
+writeBytes("phantomColor",bytes)
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671339</ID>
+                  <Description>"Gravity Missile inbound"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local bytes = { 0xCD,0xCC,0xCC,0x3E,0xCD,0xCC,0xCC,0x3E,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x80,0x3F,0x69,0x47,0x89,0x14,0x14,0x14,0x0A,0x0A,0x0A,0x14,0x14,0x14,0x69,0x47,0x89,0x00,0x00,0x00,0x80,0x3F,0x00,0x00,0x80,0x3F,0x00,0x00,0x01,0x00,0x5C,0x8F,0xC2,0x3E,0x00,0x00,0x00,0x00, }
+writeBytes("phantomColor",bytes)
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671343</ID>
+                  <Description>"White Lightning"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local bytes = { 0x26,0x55,0x62,0xC2,0xAC,0xE9,0x23,0x50,0xBE,0x89,0x00,0x00,0x00,0x00,0x00,0x00,0x78,0x7E,0x26,0xE9,0x2D,0x07,0x25,0x64,0x64,0x64,0x0A,0x0A,0x0A,0x14,0x14,0x14,0x14,0x14,0x14,0x48,0xB4,0xCC,0xED,0x6A,0x7B,0xB5,0x80,0x3F,0x00,0x00,0x01,0x00,0x30,0x67,0xE6,0x37,0xA9,0x30,0x6D,0x8C, }
+writeBytes("phantomColor",bytes)
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671344</ID>
+                  <Description>"Lightning ALT"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local bytes = { 0x00,0x00,0x00,0x40,0xAC,0xE9,0x23,0x50,0xBE,0x89,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xFF,0xFF,0xFF,0x19,0x28,0x64,0x0A,0x0A,0x0A,0x14,0x14,0x14,0x14,0x14,0x14,0x48,0xB4,0xCC,0xED,0x6A,0x7B,0xB5,0x80,0x3F,0x00,0x00,0x01,0x00,0x30,0x67,0xE6,0x37,0xA9,0x30,0x6D,0x8C, }
+writeBytes("phantomColor",bytes)
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671370</ID>
+                  <Description>"Anim overwrite"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local param = paramUtils:getIdAddressInParam("PhantomParam",1)
+originAnimOverwrite = readBytes(param,0x38)
+local anim = {
+   grav = {
+      717040000,
+      717040005,
+      717040010,
+      860040000,
+   },
+   fire = {
+      663040000,
+      663040010,
+      881040000,
+      881040010,
+      884040000,
+      884040001,
+      884040005,
+      884040006,
+   },
+}
+local animCheck = 0
+local animTimer = createTimer(getMainForm())
+animTimer.Interval = 100
+animTimer.OnTimer = function()
+   local animation = readInteger("[[[[[WorldChrMan]+10EF8]+0]+190]+18]+20")
+   if animation ~= animCheck then
+      animCheck = animation
+      local time = os.date("%X")
+      printf("[%s] animation: %d",time,animation)
+   end
+   if inArray(anim.grav,animation) then
+      local bytes = { 0x00,0x00,0x00,0x40,0xAC,0xE9,0x23,0x50,0xBE,0x89,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xFF,0xFF,0xFF,0x64,0x28,0x64,0x0A,0x0A,0x0A,0x14,0x14,0x14,0x14,0x14,0x14,0x48,0xB4,0xCC,0xED,0x6A,0x7B,0xB5,0x80,0x3F,0x00,0x00,0x01,0x00,0x30,0x67,0xE6,0x37,0xA9,0x30,0x6D,0x8C, }
+      writeBytes(param,bytes)
+   elseif inArray(anim.fire,animation) then
+      local bytes = { 0xEC,0x51,0x38,0x3E,0x42,0x60,0xE5,0x3B,0x9A,0x99,0x19,0x3E,0xCD,0xCC,0xCC,0x3D,0x00,0x00,0x00,0x00,0xDC,0x5A,0x14,0x86,0xD8,0xD8,0xDC,0xDC,0x00,0xFF,0xB4,0x00,0x53,0xEC,0x53,0x00,0x00,0x00,0x80,0x3F,0x00,0x00,0x80,0x3F,0x00,0x00,0x01,0x00,0x5C,0x8F,0xC2,0x3E,0x00,0x00,0x80,0x3F, }
+      writeBytes(param,bytes)
+   else
+      --local bytes = { 0x9A,0x99,0x99,0x3E,0x8F,0xC2,0xF5,0x3C,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x3F,0x78,0x78,0x78,0x2D,0x2D,0x2D,0x0A,0x0A,0x0A,0x14,0x14,0x14,0x14,0x14,0x14,0x00,0x00,0x00,0x80,0x3F,0x00,0x00,0x80,0x3F,0x00,0x00,0x01,0x00,0x5C,0x8F,0xC2,0x3E,0x00,0x00,0x00,0x00, }
+      --local bytes = { 0xEC,0x51,0x38,0x3E,0x42,0x60,0xE5,0x3B,0x9A,0x99,0x19,0x3E,0xCD,0xCC,0xCC,0x3D,0x00,0x00,0x00,0x00,0xBE,0x14,0x2D,0x86,0xD8,0xD8,0xDC,0xDC,0x00,0xFF,0xB4,0x00,0x53,0xEC,0x53,0x00,0x00,0x00,0x80,0x3F,0x00,0x00,0x80,0x3F,0x00,0x00,0x01,0x00,0x5C,0x8F,0xC2,0x3E,0x00,0x00,0x80,0x3F, }
+      local bytes = { 0x9A,0x99,0x19,0x3F,0x00,0x00,0x00,0x00,0xCD,0xCC,0x4C,0x3E,0xCD,0xCC,0x4C,0x3E,0x00,0x00,0x00,0x00,0xFF,0x00,0x00,0x00,0x00,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x00,0x00,0x00,0x00,0x00,0x00,0x80,0x3F,0x00,0x00,0x80,0x3F,0x00,0x00,0x01,0x00,0x5C,0x8F,0xC2,0x3E,0x00,0x00,0x00,0x00, }
+      writeBytes(param,bytes)
+   end
+   if not memrec.Active or readQword("WorldChrMan") == nil then
+      animTimer.destroy()
+   end
+end
+[DISABLE]
+local param = paramUtils:getIdAddressInParam("PhantomParam",1)
+writeBytes(param,originAnimOverwrite)
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671371</ID>
+                  <Description>"Indura's Custom Preset"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local bytes = { 0x00,0x00,0x00,0x40,0xAC,0xE9,0x23,0x50,0xBE,0x89,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xFF,0xFF,0xFF,0x64,0x28,0x64,0x0A,0x0A,0x0A,0x14,0x14,0x14,0x14,0x14,0x14,0x48,0xB4,0xCC,0xED,0x6A,0x7B,0xB5,0x80,0x3F,0x00,0x00,0x01,0x00,0x30,0x67,0xE6,0x37,0xA9,0x30,0x6D,0x8C, }
+writeBytes("phantomColor",bytes)
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671372</ID>
+                  <Description>"Pitch Black"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local bytes = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, }
+writeBytes("phantomColor",bytes)
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671373</ID>
+                  <Description>"Indura's Custom Preset"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local bytes = { 0xEC,0x51,0x38,0x3E,0x42,0x60,0xE5,0x3B,0x9A,0x99,0x19,0x3E,0xCD,0xCC,0xCC,0x3D,0x00,0x00,0x00,0x00,0xBE,0x14,0x2D,0x86,0xD8,0xD8,0xDC,0xDC,0x00,0xFF,0xB4,0x00,0x53,0xEC,0x53,0x00,0x00,0x00,0x80,0x3F,0x00,0x00,0x80,0x3F,0x00,0x00,0x01,0x00,0x5C,0x8F,0xC2,0x3E,0x00,0x00,0x80,0x3F, }
+writeBytes("phantomColor",bytes)
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671374</ID>
+                  <Description>"Indura's Custom Preset"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+local bytes = { 0xEC,0x51,0x38,0x3E,0x42,0x60,0xE5,0x3B,0x9A,0x99,0x19,0x3E,0xCD,0xCC,0xCC,0x3D,0x00,0x00,0x00,0x00,0xDC,0x5A,0x14,0x86,0xD8,0xD8,0xDC,0xDC,0x00,0xFF,0xB4,0x00,0x53,0xEC,0x53,0x00,0x00,0x00,0x80,0x3F,0x00,0x00,0x80,0x3F,0x00,0x00,0x01,0x00,0x5C,0x8F,0xC2,0x3E,0x00,0x00,0x80,0x3F, }
+writeBytes("phantomColor",bytes)
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1987671255</ID>
+              <Description>"] Custom Color Settings"</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" Activated="1" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>1987671259</ID>
+                  <Description>"Set Custom Color AOB By ID (see script)"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+--]]  phantomColor ID you want to use (see param helpers on how to obtain these).
+
+local ID = 290
+
+--]]  Dont touch
+local param = paramUtils:getIdAddressInParam("PhantomParam",ID)
+printf("Param ID: %d\nParam Address: %X",ID,param)
+local newData = readBytes(param,0x38,true)
+writeBytes("phantomColor",newData)
+disableMemrec(memrec)
+[DISABLE]
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1987671256</ID>
+                  <Description>"AOB"</Description>
+                  <ShowAsHex>1</ShowAsHex>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>Array of byte</VariableType>
+                  <ByteLength>56</ByteLength>
+                  <Address>phantomColor</Address>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>1987671258</ID>
+                      <Description>"The Alpha/Float Values are 0.00-1.00 instead 0-100% (can go beyond though)."</Description>
+                      <LastState Value="" RealAddress="00000000"/>
+                      <Color>FF8000</Color>
+                      <GroupHeader>1</GroupHeader>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1987671247</ID>
+                      <Description>"] Alpha"</Description>
+                      <LastState Value="" RealAddress="1F6E6C90000"/>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <GroupHeader>1</GroupHeader>
+                      <Address>+0</Address>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>1987671238</ID>
+                          <Description>"Global Alpha"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Float</VariableType>
+                          <Address>+24</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671198</ID>
+                          <Description>"EdgeColor"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Float</VariableType>
+                          <Address>+0</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671199</ID>
+                          <Description>"FrontColor"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Float</VariableType>
+                          <Address>+4</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671200</ID>
+                          <Description>"DiffColor"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Float</VariableType>
+                          <Address>+8</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671201</ID>
+                          <Description>"SpecColor"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Float</VariableType>
+                          <Address>+C</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671202</ID>
+                          <Description>"LightColor"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Float</VariableType>
+                          <Address>+10</Address>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1987671345</ID>
+                      <Description>"] EdgeColor"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>Array of byte</VariableType>
+                      <ByteLength>3</ByteLength>
+                      <Address>+14</Address>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>1987671205</ID>
+                          <Description>"Red 0"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+0</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671206</ID>
+                          <Description>"Green 0"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+1</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671207</ID>
+                          <Description>"Blue 0"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+2</Address>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1987671346</ID>
+                      <Description>"] FrontColor"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>Array of byte</VariableType>
+                      <ByteLength>3</ByteLength>
+                      <Address>+17</Address>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>1987671347</ID>
+                          <Description>"Red 0"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+0</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671348</ID>
+                          <Description>"Green 0"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+1</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671349</ID>
+                          <Description>"Blue 0"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+2</Address>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1987671350</ID>
+                      <Description>"] DiffColor"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>Array of byte</VariableType>
+                      <ByteLength>3</ByteLength>
+                      <Address>+1A</Address>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>1987671351</ID>
+                          <Description>"Red 0"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+0</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671352</ID>
+                          <Description>"Green 0"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+1</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671353</ID>
+                          <Description>"Blue 0"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+2</Address>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1987671354</ID>
+                      <Description>"] SpecColor"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>Array of byte</VariableType>
+                      <ByteLength>3</ByteLength>
+                      <Address>+1D</Address>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>1987671355</ID>
+                          <Description>"Red 0"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+0</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671356</ID>
+                          <Description>"Green 0"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+1</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671357</ID>
+                          <Description>"Blue 0"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+2</Address>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1987671358</ID>
+                      <Description>"] LightColor"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>Array of byte</VariableType>
+                      <ByteLength>3</ByteLength>
+                      <Address>+20</Address>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>1987671359</ID>
+                          <Description>"Red 0"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+0</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671360</ID>
+                          <Description>"Green 0"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+1</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671361</ID>
+                          <Description>"Blue 0"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+2</Address>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1987671362</ID>
+                      <Description>"] Blending"</Description>
+                      <LastState Value="" RealAddress="1F6E6C90028"/>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <GroupHeader>1</GroupHeader>
+                      <Address>+28</Address>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>1987671363</ID>
+                          <Description>"Blend Rate"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Float</VariableType>
+                          <Address>+0</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671364</ID>
+                          <Description>"Blend Type"</Description>
+                          <DropDownList DisplayValueAsItem="1">1: Human
+2: Ghost
+</DropDownList>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+4</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671365</ID>
+                          <Description>"isEdgeSubtract"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+5</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671366</ID>
+                          <Description>"isFrontSubtract"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+6</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671367</ID>
+                          <Description>"isNo2Pass "</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Byte</VariableType>
+                          <Address>+7</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671368</ID>
+                          <Description>"EdgePower"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Float</VariableType>
+                          <Address>+8</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>1987671369</ID>
+                          <Description>"glowScale"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>Float</VariableType>
+                          <Address>+C</Address>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>
