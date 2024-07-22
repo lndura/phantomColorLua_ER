@@ -13,6 +13,15 @@ Added two custom scripts that show how to make real time color changes.
 - Requires disableMemrec(memrec, delay)
 - [Elden-Ring-CT-TGA, maintained by The Grand Archives.](https://github.com/The-Grand-Archives/Elden-Ring-CT-TGA/releases/tag/v1.10.1)
 
+#### How to use:
+1. Open the raw code version of [Text File](https://raw.githubusercontent.com/lndura/phantomColorLua_ER/main/text%20file)
+2. Copy the text
+3. Open [The Grand Archvies Elden Ring Cheat Table](https://github.com/The-Grand-Archives/Elden-Ring-CT-TGA/releases/tag/v1.10.1)
+4. Right click in the address list section
+5. Click paste
+6. Save Cheat Table file
+7. You can tick the box to open up the main header, which will show more options to fully customize everything.
+8. All done! 
 
 #### You can reach me on these platforms:
 [Twitch](https://www.twitch.tv/indurabeast) | [Discord](https://discordapp.com/users/329992368084484097)
